@@ -121,7 +121,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </main>
           <footer className="border-t border-border px-6 py-3">
             <p className="text-center text-xs text-muted-foreground font-mono">
-              Lead Architect: Gunjan Arora &nbsp;|&nbsp; TestForge AI © {new Date().getFullYear()}
+              TestForge AI © {new Date().getFullYear()}
             </p>
           </footer>
         </div>
