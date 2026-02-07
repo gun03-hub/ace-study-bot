@@ -1,73 +1,153 @@
-# Welcome to your Lovable project
+# ACE Study Bot – AI Test Generator
 
-## Project info
+ACE Study Bot is an AI-powered test generation application that helps students practice smarter by generating questions and assessments based on input topics. The app is built with a modern React + TypeScript stack and integrates external services (AI + Supabase) for scalable functionality.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+This is a **frontend-first** project with clean separation of concerns and production-ready tooling.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+* **Frontend:** React, TypeScript, Vite
+* **Styling:** Tailwind CSS, PostCSS
+* **State Management:** React Context API
+* **Backend Services:** Supabase
+* **AI Integration:** External LLM APIs
+* **Tooling:** ESLint, npm
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+If you don’t know why each of these is here, learn it before you put this on your resume.
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## Prerequisites
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Make sure you have the following installed:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+* **Node.js** (v16+ recommended)
+* **npm**
 
-Follow these steps:
+Check:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+```bash
+node -v
+npm -v
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+If this fails, stop and fix your environment first.
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+## Installation
+
+Install dependencies using npm:
+
+```bash
+npm install
+```
+
+> ⚠️ This project uses **npm**, not bun.
+> Do **not** use `bun install` or `bun run`.
+
+---
+
+## Running the Application
+
+Start the development server:
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The app will be available at the local URL shown in your terminal (commonly `http://localhost:5173`).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+If `dev` doesn’t run, your `package.json` scripts are broken — that’s on you.
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Environment Variables
 
-## What technologies are used for this project?
+Create a `.env` file in the root directory and add required keys:
 
-This project is built with:
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_AI_API_KEY=your_ai_api_key
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+* Never commit `.env`
+* If your app crashes without these, that’s expected
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## Project Structure
 
-## Can I connect a custom domain to my Lovable project?
+```text
+ACE-STUDY-BOT/
+├── public/                # Static assets
+├── src/
+│   ├── components/        # Reusable UI components
+│   ├── contexts/          # Global state providers
+│   ├── hooks/             # Custom React hooks
+│   ├── integrations/      # AI and external API integrations
+│   ├── lib/               # Shared utilities and helpers
+│   ├── pages/             # Page-level components
+│   ├── test/              # Unit and integration tests
+│   ├── types/             # TypeScript type definitions
+│   ├── App.tsx            # Root component
+│   ├── main.tsx           # Entry point
+│   ├── index.css          # Global styles
+│   ├── App.css            # App-specific styles
+│   └── vite-env.d.ts      # Vite TS environment types
+│
+├── supabase/              # Supabase configuration
+├── .env                   # Environment variables
+├── .gitignore
+├── index.html             # HTML entry point
+├── package.json
+├── package-lock.json
+├── tailwind.config.ts
+├── postcss.config.js
+├── eslint.config.js
+└── README.md
+```
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Key Features
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+* AI-generated tests and questions
+* Modular, scalable React architecture
+* Type-safe codebase with TypeScript
+* Supabase integration for backend services
+* Clean separation of UI, logic, and integrations
+
+If you add features, update this list. Stale READMEs are a red flag.
+
+---
+
+## Build for Production
+
+```bash
+npm run build
+```
+
+This generates an optimized production build.
+
+---
+
+## Common Issues
+
+* **Dependencies fail to install**
+  Delete `node_modules` and `package-lock.json`, then retry `npm install`.
+
+* **App runs but shows blank screen**
+  Check browser console errors before blaming React.
+
+* **Env errors**
+  Missing `.env` values — this is not optional.
+
+---
+
+## License
+
+This project is for educational and demonstration purposes.
