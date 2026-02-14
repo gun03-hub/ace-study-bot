@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -12,6 +13,30 @@ serve(async (req) => {
   }
 
   try {
+    // Auth check
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader?.startsWith("Bearer ")) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const supabaseClient = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+      { global: { headers: { Authorization: authHeader } } }
+    );
+
+    const token = authHeader.replace("Bearer ", "");
+    const { data: claimsData, error: claimsError } = await supabaseClient.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const { text, questionCount, questionTypes } = await req.json();
 
     if (!text || text.trim().length < 50) {
@@ -21,13 +46,33 @@ serve(async (req) => {
       );
     }
 
+    // Validate text length
+    if (text.length > 50000) {
+      return new Response(
+        JSON.stringify({ error: "Text content too large (max 50,000 characters)." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    const count = questionCount || 5;
-    const types = questionTypes || ["mcq"];
+    // Validate questionCount
+    const count = Math.min(Math.max(Number(questionCount) || 5, 1), 50);
+
+    // Validate questionTypes
+    const validTypes = ["mcq", "vsa", "lsa"];
+    const types = Array.isArray(questionTypes)
+      ? questionTypes.filter((t: string) => validTypes.includes(t))
+      : ["mcq"];
+    if (types.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "At least one valid question type required (mcq, vsa, lsa)." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     let typeInstructions = "";
     if (types.includes("mcq")) {

@@ -9,6 +9,8 @@ import Auth from "./pages/Auth";
 import UploadTest from "./pages/UploadTest";
 import Analytics from "./pages/Analytics";
 import TestHistory from "./pages/TestHistory";
+import AdminDashboard from "./pages/AdminDashboard";
+import SharedTest from "./pages/SharedTest";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -64,6 +66,22 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <TestHistory />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/shared/:shareCode"
+              element={
+                <ProtectedRoute>
+                  <SharedTest />
                 </ProtectedRoute>
               }
             />
