@@ -20,6 +20,7 @@ export type Database = {
           display_name: string | null
           email: string | null
           id: string
+          role: string
           updated_at: string
           user_id: string
         }
@@ -28,6 +29,7 @@ export type Database = {
           display_name?: string | null
           email?: string | null
           id?: string
+          role?: string
           updated_at?: string
           user_id: string
         }
@@ -36,8 +38,42 @@ export type Database = {
           display_name?: string | null
           email?: string | null
           id?: string
+          role?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      shared_tests: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          question_count: number
+          question_types: string[]
+          questions: Json
+          share_code: string
+          topic: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          question_count: number
+          question_types?: string[]
+          questions: Json
+          share_code?: string
+          topic: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          question_count?: number
+          question_types?: string[]
+          questions?: Json
+          share_code?: string
+          topic?: string
         }
         Relationships: []
       }
